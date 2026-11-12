@@ -4,7 +4,7 @@
 
 | 編號 | 標題 | 狀態 | feature |
 |---|---|---|---|
-| T-000 | 開發環境建置 | 待討論 | 待討論 |
+| [T-000](T-000-dev-environment.md) | 開發環境建置 | approved | `features/tooling/*.feature`（5 個，`@approved`） |
 
 ## T-000 之前（主 session 在使用者同意後執行，不走 agent 流程）
 

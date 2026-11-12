@@ -44,4 +44,6 @@ cli ──► pipeline ──► probe / parsers / enrich / output / clients / c
 | `scripts/` | 由 T-000 建立，之後經任務修改 |
 
 **固定放行路徑**：implementer 除了任務檔列出的路徑，永遠可以寫 `docs/reports/T-xxx-impl.md`（自己任務的）與 `docs/lessons/`。
-範圍檢查（verifier 與 `scripts/scope_check.py`）一律以這段為準，不另外定義。
+T-000 完成後，機器可讀的清單只放在 `scripts/scope.toml`，`scripts/scope_check.py` 與 verifier 都以它為準；要改放行路徑就改那個檔，並同步這段說明。
+
+**`tooling`**：不是 `src/` 裡的模組，指 `scripts/` 與開發工具。feature 放在 `features/tooling/`。
