@@ -35,6 +35,7 @@
 | 記錄或查詢錯誤教訓 | `lessons` skill |
 | 模組邊界、目錄結構、檔案歸屬 | `docs/ARCHITECTURE.md` |
 | 整體設計與模型選擇 | `docs/DESIGN.md` |
+| 開發分期、某功能排在哪一期 | `docs/ROADMAP.md` |
 | 任務清單與狀態 | `docs/tasks/README.md` |
 
 ## 指令
