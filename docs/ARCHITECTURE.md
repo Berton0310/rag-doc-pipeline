@@ -47,3 +47,9 @@ cli ──► pipeline ──► probe / parsers / enrich / output / clients / c
 T-000 完成後，機器可讀的清單只放在 `scripts/scope.toml`，`scripts/scope_check.py` 與 verifier 都以它為準；要改放行路徑就改那個檔，並同步這段說明。
 
 **`tooling`**：不是 `src/` 裡的模組，指 `scripts/` 與開發工具。feature 放在 `features/tooling/`。
+
+**預定新增的模組**（尚未生效，由對應任務的 feature 正式加入，並同步更新依賴規則與模組邊界檢查）：
+
+| 模組 | 路徑 | 職責 | 加入任務 |
+|---|---|---|---|
+| `web` | `src/ragdoc/web/` | 本機檢視頁的入口（FastAPI），地位同 `cli`，可 import `pipeline` | T-009 |
