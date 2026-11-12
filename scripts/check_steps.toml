@@ -1,0 +1,19 @@
+# check.py 的預設檢查項目，依序執行。
+# command 的第一個元素若是 "python"，check.py 會換成目前環境的 Python（sys.executable）。
+# 其他執行檔先在目前環境的 Scripts/bin 目錄找，再找 PATH。
+
+[[step]]
+name = "lint"
+command = ["python", "-m", "ruff", "check", "src", "scripts", "tests/unit"]
+
+[[step]]
+name = "boundaries"
+command = ["lint-imports", "--no-cache"]
+
+[[step]]
+name = "unit"
+command = ["python", "-m", "pytest", "tests/unit", "-m", "not manual and not gpu and not network"]
+
+[[step]]
+name = "bdd"
+command = ["python", "-m", "pytest", "tests/bdd", "-m", "not manual and not gpu and not network"]

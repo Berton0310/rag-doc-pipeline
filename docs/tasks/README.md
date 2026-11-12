@@ -4,7 +4,7 @@
 
 | 編號 | 標題 | 狀態 | feature |
 |---|---|---|---|
-| [T-000](T-000-dev-environment.md) | 開發環境建置 | approved | `features/tooling/*.feature`（5 個，`@approved`；scope_check 重寫 steps 中） |
+| [T-000](T-000-dev-environment.md) | 開發環境建置 | manual | `features/tooling/*.feature`（5 個，`@approved`）；待人工 3 項見 `docs/manual-checks/T-000.md` |
 | T-001 | 中間格式 | 未建立 | — |
 | T-002 | 仿真 SOP（原生 PDF） | 未建立 | — |
 | T-003 | 逐頁判斷 | 未建立 | — |

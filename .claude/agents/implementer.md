@@ -6,6 +6,12 @@ tools: Read, Write, Edit, Glob, Grep, Bash, PowerShell
 disallowedTools: Agent
 skills:
   - lessons
+hooks:
+  PreToolUse:
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "uv run --no-project python -c \"import os, runpy; runpy.run_path(os.environ['CLAUDE_PROJECT_DIR'] + '/scripts/hooks/guard_paths.py', run_name='__main__')\""
 color: blue
 ---
 

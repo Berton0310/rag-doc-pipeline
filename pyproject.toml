@@ -1,0 +1,150 @@
+[project]
+name = "ragdoc"
+version = "0.1.0"
+description = "企業文件（先做 PDF）轉結構化中間格式的管線，供 RAG 切塊與評估使用"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+ragdoc = "ragdoc.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ragdoc"]
+
+[dependency-groups]
+dev = [
+    "import-linter>=2.0",
+    "pytest>=8.0",
+    "pytest-bdd>=8.0",
+    "ruff>=0.6",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+# ---------------------------------------------------------------------------
+# 模組邊界（規則以 docs/ARCHITECTURE.md「依賴規則」為準）
+# 除 pipeline 與 cli 外，每個模組只能 import contracts，同層模組之間互不 import。
+# 新增模組或 parsers 後端時，要同步更新這裡的清單。
+# ---------------------------------------------------------------------------
+[tool.importlinter]
+root_package = "ragdoc"
+
+[[tool.importlinter.contracts]]
+name = "contracts 不得 import 其他模組"
+type = "forbidden"
+source_modules = ["ragdoc.contracts"]
+forbidden_modules = [
+    "ragdoc.config",
+    "ragdoc.probe",
+    "ragdoc.parsers",
+    "ragdoc.enrich",
+    "ragdoc.clients",
+    "ragdoc.output",
+    "ragdoc.pipeline",
+    "ragdoc.cli",
+]
+
+[[tool.importlinter.contracts]]
+name = "config 只能 import contracts"
+type = "forbidden"
+source_modules = ["ragdoc.config"]
+forbidden_modules = [
+    "ragdoc.probe",
+    "ragdoc.parsers",
+    "ragdoc.enrich",
+    "ragdoc.clients",
+    "ragdoc.output",
+    "ragdoc.pipeline",
+    "ragdoc.cli",
+]
+
+[[tool.importlinter.contracts]]
+name = "probe 只能 import contracts"
+type = "forbidden"
+source_modules = ["ragdoc.probe"]
+forbidden_modules = [
+    "ragdoc.config",
+    "ragdoc.parsers",
+    "ragdoc.enrich",
+    "ragdoc.clients",
+    "ragdoc.output",
+    "ragdoc.pipeline",
+    "ragdoc.cli",
+]
+
+[[tool.importlinter.contracts]]
+name = "parsers 只能 import contracts"
+type = "forbidden"
+source_modules = ["ragdoc.parsers"]
+forbidden_modules = [
+    "ragdoc.config",
+    "ragdoc.probe",
+    "ragdoc.enrich",
+    "ragdoc.clients",
+    "ragdoc.output",
+    "ragdoc.pipeline",
+    "ragdoc.cli",
+]
+
+[[tool.importlinter.contracts]]
+name = "enrich 只能 import contracts"
+type = "forbidden"
+source_modules = ["ragdoc.enrich"]
+forbidden_modules = [
+    "ragdoc.config",
+    "ragdoc.probe",
+    "ragdoc.parsers",
+    "ragdoc.clients",
+    "ragdoc.output",
+    "ragdoc.pipeline",
+    "ragdoc.cli",
+]
+
+[[tool.importlinter.contracts]]
+name = "clients 只能 import contracts"
+type = "forbidden"
+source_modules = ["ragdoc.clients"]
+forbidden_modules = [
+    "ragdoc.config",
+    "ragdoc.probe",
+    "ragdoc.parsers",
+    "ragdoc.enrich",
+    "ragdoc.output",
+    "ragdoc.pipeline",
+    "ragdoc.cli",
+]
+
+[[tool.importlinter.contracts]]
+name = "output 只能 import contracts"
+type = "forbidden"
+source_modules = ["ragdoc.output"]
+forbidden_modules = [
+    "ragdoc.config",
+    "ragdoc.probe",
+    "ragdoc.parsers",
+    "ragdoc.enrich",
+    "ragdoc.clients",
+    "ragdoc.pipeline",
+    "ragdoc.cli",
+]
+
+[[tool.importlinter.contracts]]
+name = "parsers 的後端子模組彼此不得 import"
+type = "independence"
+modules = [
+    "ragdoc.parsers.*",
+]

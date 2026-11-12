@@ -1,0 +1,9 @@
+# scope_check.py 與 verifier 共用的固定放行路徑（機器可讀的唯一出處）。
+# 結尾是 / 的是目錄（比對路徑段），其他是單一檔案。{task} 會換成任務編號（例如 T-000）。
+# 要改放行路徑就改這裡，並同步 docs/ARCHITECTURE.md「目錄與歸屬」的說明。
+
+[fixed]
+paths = [
+    "docs/lessons/",
+    "docs/reports/{task}-impl.md",
+]

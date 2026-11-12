@@ -2,11 +2,11 @@
 
 | 欄位 | 內容 |
 |---|---|
-| 狀態 | approved |
+| 狀態 | manual |
 | feature | features/tooling/install.feature、check.feature、scope_check.feature、boundaries.feature、guard_hook.feature |
 | 模組 | tooling |
 | 依賴任務 | 無 |
-| base commit | （派 implementer 前由主 session 填） |
+| base commit | 9d6d0a75d1f849617888d718dcb1450d68587a70 |
 | 重工次數 | 0 / 3 |
 
 ## 公開介面
@@ -114,3 +114,6 @@ step definitions 只會透過這裡列的介面呼叫系統。implementer 必須
 | 2026-11-12 | approved | write-steps 完成：55 紅燈、3 待人工、0 個 step 錯誤（主 session 重跑確認）。補上介面細節。scope_check 的任務檔變動問題待使用者決定 |
 | 2026-11-12 | draft | 使用者選方案 A：允許路徑以 base 版本任務檔為準。scope_check.feature 退回 @draft 待重新核准 |
 | 2026-11-12 | approved | 使用者重新核准 scope_check.feature；只對它重跑 write-steps |
+| 2026-11-12 | steps | scope_check 重寫完成：全套 61 紅燈、3 待人工、0 個 step 錯誤（主 session 重跑確認）。commit `T-000: steps` 為 base |
+| 2026-11-12 | impl | 第 1 輪 implementer 在收尾階段被使用者要求停止（之後測試一律在實驗室筆電跑）。成果未 commit、未驗證，留在工作目錄 |
+| 2026-11-12 | manual | verify（在 bw 執行）：PASS 61、FAIL 0、待人工 3。主 session 在 bw 重跑 check.py 與 scope_check 確認 exit 0。commit `T-000: impl` |
