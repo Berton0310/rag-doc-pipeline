@@ -1,0 +1,5 @@
+# Windows 筆電與 Linux GPU 機器共用：repo 內一律 LF
+* text=auto eol=lf
+*.pdf binary
+*.png binary
+*.jpg binary

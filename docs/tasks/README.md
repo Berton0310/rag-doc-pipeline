@@ -1,0 +1,21 @@
+# 任務清單
+
+狀態定義與流程：`.claude/skills/dispatch/references/loop.md`。新任務模板：`.claude/skills/dispatch/references/task-template.md`。
+
+| 編號 | 標題 | 狀態 | feature |
+|---|---|---|---|
+| T-000 | 開發環境建置 | 待討論 | 待討論 |
+
+## T-000 之前（主 session 在使用者同意後執行，不走 agent 流程）
+
+- ~~`git init` 並做第一次 commit~~：2026-11-12 完成。
+- GitHub repo 公開或私有、何時 push，由使用者決定。
+
+## T-000 預計內容（待與使用者討論後寫成 feature）
+
+- `pyproject.toml`、套件骨架 `src/ragdoc/`
+- `scripts/check.py`：ruff、import-linter（模組邊界）、pytest（unit + bdd，排除 manual / gpu / network）
+- `scripts/scope_check.py`：比對 diff 與任務的允許路徑（加上 `docs/ARCHITECTURE.md` 的固定放行路徑），並確認 `features/`、`tests/bdd/` 沒被實作者改動
+- 確認全域 RTK hook 不會截斷 verifier 需要的指令輸出
+- pytest-bdd 設定與標籤對應的 marker
+- implementer 的路徑防護 hook（修改 `features/`、`tests/bdd/` 時直接擋下）

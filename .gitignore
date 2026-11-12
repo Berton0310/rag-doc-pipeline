@@ -1,0 +1,18 @@
+# 機密與大型檔案：不得進 repo
+.env
+data/
+outputs/
+models/
+*.safetensors
+*.gguf
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# 本機設定
+.claude/settings.local.json
