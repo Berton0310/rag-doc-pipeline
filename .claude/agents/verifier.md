@@ -22,6 +22,7 @@ color: purple
 2. 撰寫規則見 `tests/bdd/CLAUDE.md`。只能寫 `tests/bdd/`、`docs/reports/T-xxx-steps.md`、`docs/lessons/`。
 3. 寫完執行一次，確認每個情境都「因為尚未實作而失敗」。
 4. 報告 `docs/reports/T-xxx-steps.md`：情境與 step 的對照、執行指令與輸出摘錄、你覺得 feature 寫得不清楚的地方。
+5. brief 有「範圍」行時：只重寫列出的 feature 對應的 step，不得修改其他 feature 的 step；報告不覆寫原內容，在末尾加一段「部分重寫紀錄（範圍：…）」，寫法同第 4 點。第 3 點的執行仍要跑整個 `tests/bdd/`，確認其他 feature 的結果沒有改變。
 
 ## 模式 B：fix-steps
 

@@ -40,11 +40,13 @@ step definitions 只會透過這裡列的介面呼叫系統。implementer 必須
 ### `scripts/scope_check.py`
 
 - `scope_check.py T-xxx`：在 repo 根目錄執行，讀取 `docs/tasks/T-xxx-*.md`。
-- 從任務檔讀取：表格中的 `base commit` 欄位；`## 允許修改的路徑（implementer）` 段落下的條列路徑。
+- 從**工作目錄**的任務檔讀取表格中的 `base commit` 欄位。
+- 從 **base commit 版本**的任務檔（`git show <base>:<任務檔路徑>`）讀取 `## 允許修改的路徑（implementer）` 段落下的條列路徑。
+- 任務檔本身：與 base 版本比對，忽略開頭欄位表的 `狀態`、`base commit`、`重工次數` 三列與 `## 紀錄` 段落；其他地方有差異時，任務檔列為越界並標 `嚴重`。
 - 固定放行路徑：`docs/lessons/`、`docs/reports/<本任務編號>-impl.md`。清單定義在 `scripts/scope.toml`。
 - 比對範圍：base commit 到目前工作目錄，含已 commit、未 commit、未追蹤（不含被 .gitignore 忽略的檔案）、刪除。
 - 輸出：沒有越界時包含 `沒有超出範圍`；有越界時逐行列出路徑，`features/` 與 `tests/bdd/` 底下的路徑標 `嚴重`。
-- exit code：0 沒有越界；1 有越界；2 任務檔找不到、沒填 base commit、base commit 不存在。
+- exit code：0 沒有越界；1 有越界；2 任務檔找不到、沒填 base commit、base commit 不存在、base commit 中沒有這個任務檔。
 
 ### 模組邊界檢查
 
@@ -59,6 +61,22 @@ step definitions 只會透過這裡列的介面呼叫系統。implementer 必須
 - 放行：exit code 0。
 - 輸入無法解析：擋下（exit code 2）。
 - 只掛在 `.claude/agents/implementer.md` 的 frontmatter `hooks`（matcher：`Write|Edit`）。
+
+### 介面補充（2026-11-12，依 write-steps 報告的疑義由主 session 確認）
+
+- **套件骨架**：`parsers` 底下要有 `native/` 與 `stub/` 兩個子套件（目錄加 `__init__.py`），不是 `native.py`。
+- **`ragdoc --version`**：輸出可以是 `ragdoc 0.1.0` 這種「程式名稱 + 版本號」的形式，版本號要以完整的詞出現。
+- **`check.py --list`**：stdout 每行一個項目名稱，沒有標題或其他文字。
+- **`check.py` 的 `lint` 項目**：範圍是 `src/`、`scripts/`、`tests/unit/`，**不含 `tests/bdd/`**（verifier 的檔案，implementer 無法修改；品質由主 session 檢查）。
+- **`scope_check.py` 的錯誤訊息**：輸出要**逐字**包含：`找不到 T-xxx 的任務檔`、`任務檔沒有填 base commit`、`base commit 不存在`、`base commit 中沒有 T-xxx 的任務檔`。
+- **`guard_paths.py` 的 stderr**：要包含**收到的原始路徑字串**（例如 `src/../features/tooling/new.feature`，不能只印正規化後的路徑），以及「疑義」兩字；無法解析輸入時要包含「無法解析」。
+- **輸出編碼**：所有腳本不論主控台的編碼為何，stdout 與 stderr 一律以 UTF-8 輸出（例如在程式開頭 `sys.stdout.reconfigure(encoding="utf-8")`）。這台開發機的主控台是 cp950，不處理的話中文會變亂碼。
+- **`scope_check.py` 讀允許路徑的格式**（2026-11-12 補，依 scope_check 重寫報告第 15、16 點）：
+  - 條列文字去掉反引號；含全形括號「（」時只取它之前的部分（例如 `.claude/agents/implementer.md（只能加…）` → `.claude/agents/implementer.md`），再去掉前後空白。
+  - 結尾是 `/` 的是目錄，比對路徑段（`src/ragdoc/probe/` 不含 `src/ragdoc/probe_extra/`）；其他是單一檔案，必須完全相同。
+  - base commit 欄不是 7 到 40 位的十六進位字串時（空白、佔位文字 `（派 implementer 前由主 session 填）` 等），一律回報 `任務檔沒有填 base commit`。
+  - verify 時會實際執行 `scope_check.py T-000`，以本任務檔驗證這些格式。
+- **網路**：`uv sync` 在 uv 快取沒有套件時需要下載；這不算 `@network`，但第一次在新機器上跑時要有網路。
 
 ## 允許修改的路徑（implementer）
 
@@ -93,3 +111,6 @@ step definitions 只會透過這裡列的介面呼叫系統。implementer 必須
 |---|---|---|
 | 2026-11-12 | draft | 建立，feature 待使用者核准 |
 | 2026-11-12 | approved | 使用者核准 5 個 feature |
+| 2026-11-12 | approved | write-steps 完成：55 紅燈、3 待人工、0 個 step 錯誤（主 session 重跑確認）。補上介面細節。scope_check 的任務檔變動問題待使用者決定 |
+| 2026-11-12 | draft | 使用者選方案 A：允許路徑以 base 版本任務檔為準。scope_check.feature 退回 @draft 待重新核准 |
+| 2026-11-12 | approved | 使用者重新核准 scope_check.feature；只對它重跑 write-steps |

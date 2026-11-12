@@ -11,7 +11,7 @@ description: 與使用者討論行為規則並寫成 Gherkin feature 檔，或�
 2. **寫成 feature**：放在 `features/<模組>/<行為>.feature`，Feature 層級標 `@draft`。
 3. **逐條確認**：請使用者看過每個情境，並特別問「哪些情境只有人能判斷好壞」，那些標 `@manual`。
 4. **核准**：使用者在對話中明確說同意後，才把 `@draft` 改成 `@approved`，並在檔案頂端加上核准日期註解。
-5. **修改已核准的 feature**（規則只寫在這裡）：feature 改回 `@draft` 重新走 3、4；依賴它的任務狀態改回 `draft`，重新核准後從 write-steps 重跑。
+5. **修改已核准的 feature**（規則只寫在這裡）：feature 改回 `@draft` 重新走 3、4；依賴它的任務狀態改回 `draft`。重新核准後，只對**被修改的 feature** 重跑 write-steps（brief 加「範圍」行，見 dispatch 的 `references/briefs.md`），同任務其他 feature 的 step 保留不動。
 
 ## 需要時才讀
 

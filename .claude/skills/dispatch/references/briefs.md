@@ -18,6 +18,12 @@ Agent 呼叫：`subagent_type: verifier`，`model: opus`
 任務：docs/tasks/T-xxx.md
 ```
 
+feature 修改後重新核准，只重寫部分 feature 時加一行（每個 feature 一個路徑）：
+
+```
+範圍：features/<模組>/<行為>.feature
+```
+
 ## verifier：fix-steps
 
 Agent 呼叫：`subagent_type: verifier`，`model: opus`

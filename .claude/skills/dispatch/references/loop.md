@@ -32,6 +32,7 @@
   1. step definitions 確認後：`T-xxx: steps`，成為 base commit
   2. verify 沒有 FAIL 後：`T-xxx: impl`
 - 重工輪不 commit，verifier 一律比對「base commit 到目前工作目錄」。
+- 從 base commit 到 `T-xxx: impl` 之間，主 session 只能改本任務任務檔的「狀態」「base commit」「重工次數」三欄與「紀錄」段落（scope_check 會忽略這些）。`docs/tasks/README.md` 等其他檔案，等 commit `T-xxx: impl` 時再一起更新，否則 scope_check 會把它們算成越界。
 - 是否 push、push 到哪裡，每次問使用者。
 
 ### 2. implement
